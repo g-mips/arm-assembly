@@ -1,5 +1,6 @@
 	/* Variables */
 	.data
+
 	
 	.balign 4
 output:
