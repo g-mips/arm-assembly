@@ -21,6 +21,18 @@ num:
 	.word 0
 
 	.balign 4
+ask_input2:
+	.asciz "Give me a number: "
+
+	.balign 4
+is_even:
+	.asciz "Your number is even\n"
+
+	.balign 4
+is_odd:
+	.asciz "Your number is odd\n"
+	
+	.balign 4
 max_num:
 	.word 20
 	
@@ -57,9 +69,26 @@ loop_cond:
 	cmp r2, r1
 	bgt loop
 	/* End Loop */
-	
+
+if_even:
+	ldr r0, =ask_input2
+	bl printf
+	ldr r0, =input
+	ldr r1, =num
+	bl scanf
+	ldr r1, =num
+	ldr r1, [r1]
+	ands r3, r1, #1
+	bne else
+	ldr r0, =is_even
+	b end
+else:
+	ldr r0, =is_odd
 end:
+	bl printf
 	ldr r0, =output
+	ldr r1, =num
+	ldr r1, [r1]
 	bl printf
 	ldr lr, =return
 	ldr lr, [lr]

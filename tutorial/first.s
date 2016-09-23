@@ -48,6 +48,7 @@
 
 		0000 0    000          0000        0000 0000 0000 0000 0000
 		NZCV Q RAZ/SBZP Reserved, UNK/SBZP  GE   Reserved, UNK/SBZP
+
 		Useful CPSR Info:
 			* EQ (equal: When Z is enabled)
 			* NE (not equal: When Z is disabled)
