@@ -6,6 +6,9 @@
 
 		You should represent integers in twos complement
 
+		r0 -- r3 caller save
+		r4 -- r11 callee save
+		r12 -- caller save
 		r0 -- r4 are used as parameters. More than four parameters and the stack is used
 		r0 - This holds the exit code
 		r1
@@ -72,7 +75,7 @@
 	/* -- load01.s */
 
 	/* -- Data section */
-	.data
+.data
 
 	/* Ensure variable is 4-byte aligned */
 	.balign 4

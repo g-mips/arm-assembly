@@ -1,8 +1,13 @@
 #include <stdio.h>
 
-char glow = 'a';
+void test(char* glow)
+{
+  printf("%c", *glow);
+}
 
 int main()
 {
-  printf("%c", glow);
+  char a = 'a';
+  char* p = &a;
+  test(p);
 }

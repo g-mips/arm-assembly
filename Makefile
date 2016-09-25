@@ -1,9 +1,9 @@
 all: pro
 
 pro: pro.o
-	gcc -o $@ $<
+	ld -o $@ $<
 
-pro.o: proficiencies.s
+pro.o: proficiencies2.s
 	as -o $@ $<
 
 clean:

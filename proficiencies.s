@@ -1,55 +1,55 @@
-	/* Variables */
-	.data
+/* Variables */
+.data
 
 	
-	.balign 4
+.balign 4
 output:
-	.asciz "Hello! You choose: %d\n"
+.asciz "Hello! You choose: %d\n"
 
-	/* What Will I ask the user? */
-	.balign 4
+/* What Will I ask the user? */
+.balign 4
 ask_input:
-	.asciz "Give me a number greater than or equal to 20: "
+.asciz "Give me a number greater than or equal to 20: "
 
-	/* Pass the input type essentially */
-	.balign 4
+/* Pass the input type essentially */
+.balign 4
 input:
-	.asciz "%d"
+.asciz "%d"
 
-	/* Assign the input to something */
-	.balign 4
+/* Assign the input to something */
+.balign 4
 num:
-	.word 0
+.word 0
 
-	.balign 4
+.balign 4
 ask_input2:
-	.asciz "Give me a number: "
+.asciz "Give me a number: "
 
-	.balign 4
+.balign 4
 is_even:
-	.asciz "Your number is even\n"
+.asciz "Your number is even\n"
 
-	.balign 4
+.balign 4
 is_odd:
-	.asciz "Your number is odd\n"
+.asciz "Your number is odd\n"
 	
-	.balign 4
+.balign 4
 max_num:
-	.word 20
+.word 20
 	
-	/* We will need to return to different parts of the program. This can help. */
+/* We will need to return to different parts of the program. This can help. */
 return:
-	.word 0
+.word 0
 	
-	/* Program */
-	.text
+/* Program */
+.text
 
-	.global printf
-	.global scanf
-	.global main
+// push {lr}
+// pop {pc}
+.global main
 main:
-	ldr r1, =return
-	str lr, [r1]
+ldr r1, =return
+str lr, [r1]
 	ldr r2, =max_num
 	ldr r2, [r2]
 	mov r1, #0
