@@ -1,0 +1,76 @@
+http://infocenter.arm.com/help/topic/com.arm.doc.dui0204j/Cacigaci.html
+http://www.coranac.com/tonc/text/asm.htm
+
+Curly Braces is a list!
+
+PUSH is just a synonym for STMDB using sp as the base register. The DB indicates the 'decrement-before' addressing mode.
+     PUSH {lr} == STMDB sp!, {lr}
+     The ! will update the sp
+     
+INSTRUCTIONS I DON'T UNDERSTAND:
+	     Q{D}ADD Rd, Rm, Rn
+	     Q{D}SUB Rd, Rm, Rn
+	     SUBS PC, LR, #<imm8>
+	     All Saturate Instructions
+	     EOR{S} Rd, Rn, <Operand2>
+	     
+TWO-LETTER CONDITION CODES:			 
+	   - AL : Always (This is the default)
+	   - NV : Never (Inverse of always)
+	   - EQ : Equal				         Z
+	   - NE : Not Equal (Inverse of equal)          !Z
+	   - VS : Overflow Set			            V
+	   - VC : Overflow Clear (Inverse of VS)           !V
+	   - MI : Minus	   	 	     	               N
+	   - PL : Plus (Inverse of MI)                        !N
+	   - CS : Carry Set				          C
+	   - CC : Carry Clear (Inverse of CS)                    !C
+	   - HI : Higher                                !Z        C
+	   - LS : Lower or same                          Z           |          !C
+	   - GE : Greater than or equal to                 !V !N     |     V  N
+	   - LT : Less than (Inverse of GE)                 V !N     |    !V  N
+	   - GT : Greater than                          !Z !V !N     | !Z  V  N
+	   - LE : Less than or equal to (Inverse of GT)     V !N     |    !V  N    |  Z  V !N     |  Z !V  N
+	   
+.macro macroname [argument{,arguments}]
+.byte
+.ifb
+.else
+.endif
+.ifnb
+.endm - end macro
+.rodata - section
+.asciz
+
+
+.text
+	- Section
+	- 
+
+
+.data
+	- Section
+	- Program copies all the data found in here to RAM when the program starts up.
+	- These can be binary values, strings, pointers, etc.
+	
+.bss
+.space
+.align
+.balign
+.section - section
+.ramcode
+.func - Tells the beginning of a function (but it's used for debugging purposes)
+.endfunc
+.type
+
+
+Labels:
+	- lines ending in a colon
+
+Instructions:
+	- lines the program will execute
+
+Directives:
+	- "hints" to the assembler
+
+ARM is RISC (Reduced Instrcution Set Computer)

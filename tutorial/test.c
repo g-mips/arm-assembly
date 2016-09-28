@@ -1,13 +1,15 @@
 #include <stdio.h>
+#include <limits.h>
 
-void test(char* glow)
+void test(int max)
 {
-  printf("%c", *glow);
+  printf("%d", max);
 }
 
 int main()
 {
   char a = 'a';
   char* p = &a;
-  test(p);
+  
+  test(SSIZE_MAX);
 }

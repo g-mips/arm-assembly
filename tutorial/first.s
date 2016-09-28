@@ -6,27 +6,24 @@
 
 		You should represent integers in twos complement
 
-		r0 -- r3 caller save
-		r4 -- r11 callee save
-		r12 -- caller save
-		r0 -- r4 are used as parameters. More than four parameters and the stack is used
-		r0 - This holds the exit code
-		r1
-		r2
-		r3
-		r4
-		r5
-		r6
-		r7
-		r8
-		r9
-		r10
-		r11
-		r12
-		sp (r13) - Stack Pointer
-		lr (r14) - Link Register (address of last thing that called us)
-		pc (r15) - Program Counter (also called ip or "Instruction Pointer")
+		r0 -- r3 (a1 -- a4) Caller-saved registers - subprogram can use them as scratch registers, but it must also save any needed values
+			 before calling another subprogram. First 4 arguments into a procedure/Scratch pad/Return result(s) from a function
+			 (not preserved across call)
+		r4 -- r8 (v1 -- v5) Callee-saved registers - it can rely on an subprogram it calls not to change them (so a subprogram wishing to use
+			 these registers must save them on entry and restore them before it exits) Register Variables (preserved across call)
+		r9       (sb/v6   ) Callee-saved register - pointer to static base in memory. Static base / Register Variable (preserved across call)
+		r10	 (sl/v7   ) Callee-saved register - pointer to static base in memory. Static base / Register Variable (preserved across call)
+		r11      (fp      ) Frame pointer (if used) / Register Variable (preserved across call) Callee-saved register - pointer to bottom of call-frame
+		r12      (ip      ) Intra-procedure call scratch register (not preserved across call) Caller-saved register - used by linker as a scratch
+				    register. It can be used by a routine as a scratch register 
+		r13      (sp      ) Stack pointer - points to the top of the stack
+		r14      (lr      ) Link register - holds the return address Receives return address on BL call to procedure
+		r15      (pc/ip   ) Program Counter or Instruction Pointer
 		cpsr - Current Program Status Register
+
+		r0 -- r3, r12 caller-saved
+		r4 -- r11     callee save
+		r0 - This holds the exit code
 
 		mov DES, SRC - Move SRC into DES
 		add DES, LFT, RGT - Add LFT and RGT and store result into DES
@@ -70,6 +67,12 @@
 			* CC/LO (carry clear/lower) When C is disabled (C is 0)
 
 		COMBINE ANY OF THOSE ABOVE WITH 'b' TO MAKE A BRANCH CONDITIONAL (THIS IS JMP IN OTHER INSTRUCTION SETS)
+
+		Arrays:	 The first item has the base address. Index will tell how far away from the base address said item is. Items may take more than
+			 one byte to hold.
+
+		Structures: Also called a record or tuple. Sequence of items of possibly different kinds. The items are called fields. Fields do not have
+			    associated indexes but an offset respect to the beginning of the structure.
 	
 	*/
 	/* -- load01.s */
