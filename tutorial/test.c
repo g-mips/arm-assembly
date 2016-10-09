@@ -1,15 +1,14 @@
-#include <stdio.h>
-#include <limits.h>
-
-void test(int max)
-{
-  printf("%d", max);
-}
 
 int main()
 {
-  char a = 'a';
-  char* p = &a;
-  
-  test(SSIZE_MAX);
+  double dNum = 7.54321;
+  float fNum = 6.345;
+  char byte = 'a';
+  short sNum;
+  int iNum;
+
+  sNum = (short)byte;
+  iNum = (int)sNum;
+
+  return 0;
 }

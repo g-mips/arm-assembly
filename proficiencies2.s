@@ -110,6 +110,13 @@ div_x_to_loop_check:
 	mov r0, r2
 		
 	pop {pc}
+
+div_sdiv:
+	push {lr}
+
+	sdiv r0, r0, r1
+	
+	pop {pc}
 	
 _start:
 /*
@@ -217,9 +224,12 @@ end:
 	ldr r2, [sp, #4]
 	mov r7, #0x4
 	svc #0
-	
+
 	// Put the number that was manipulated the whole time back into r0 for viewing on the error code
 	ldr r0, [r4]
-	add sp, sp, #4
+	mov r1, #2
+	
+	bl div_sdiv
+	add sp, sp, #8
 	mov r7, #1
 	svc #0

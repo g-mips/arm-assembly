@@ -33,7 +33,15 @@ TWO-LETTER CONDITION CODES:
 	   - LE : Less than or equal to (Inverse of GT)     V !N     |    !V  N    |  Z  V !N     |  Z !V  N
 	   
 .macro macroname [argument{,arguments}]
-.byte
+.byte  - char  (8  bit)
+.2byte - short (16 bit) 
+.4byte - int   (32 bit) 
+.8byte - long  (64 bit)
+
+.hword .short .word - can be the same
+.word .int    - can be the same
+.int .long    - can be the same
+
 .ifb
 .else
 .endif
@@ -54,6 +62,8 @@ TWO-LETTER CONDITION CODES:
 	- These can be binary values, strings, pointers, etc.
 	
 .bss
+	- Section
+	- Uninitialized global variables
 .space
 .align
 .balign
@@ -74,3 +84,8 @@ Directives:
 	- "hints" to the assembler
 
 ARM is RISC (Reduced Instrcution Set Computer)
+
+A binary floating point number is an approximate representation of a real number with three parts: sign, mantissa and exponent
+  - Sign: 0 or 1, 1 is negative and 0 is positive
+  - Mantissa: Represents a fractional magnitude. Numbers are normalized. Which means that the integer part is adjusted to always be one.
+    	      
