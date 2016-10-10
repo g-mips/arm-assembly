@@ -13,4 +13,4 @@ pro.o: proficiencies2.s
 	as -o $@ $<
 
 clean:
-	rm -vf pro* *.o
+	rm -vf pro pro3 *.o
