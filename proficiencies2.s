@@ -45,13 +45,32 @@ my_struc:
 	
 .global _start
 
-store_into_struct:
-	push {lr}
+.balign 4
+utoa_r:	
+	push {r4-r6,lr}
 
-	ldr r4, [r0]
+	mov r4, r0		// r4 contains buffer pointer
+	mov r5, r1		// r5 contains number
 
-	pop {pc}
-	
+	mov r0, r1		// Move number into r0
+	mov r6, #10
+	udiv r0, r6		// Get the number divided by 10
+
+	sub r5, r5, r0, LSL #3
+	sub r5, r5, r0, LSL #1	// These subs give me the remainder of udiv
+
+	// So now we have r0 - quotient and r5 - remainder
+	// The remainder is the new character that will be put onto the string!
+
+	cmp r0, #0		// Is quotient non-zero?
+	movne r1, r0		// If it isn't zero, move quotient into r1. This prepares it for the recursive call.
+	mov r0, r4		// character is moved into r0
+	blne utoa_r		// If the quotient is zero, we are done and we don't call
+
+	add r5, r5, #48		// This converts the remainder to a character
+	strb r5, [r0], #1	// We then stick the new character on the buffer
+
+
 add_x_to:
 	push {r4-r6,lr}
 
@@ -191,9 +210,11 @@ _start_end:
 	svc #0
 
 	// TODO(Grant): User input will return the length in r0 so use it!
+	str r0, [sp, #4]
 	
-	ldr r5, =user_input
-	ldr r5, [r5]
+	ldr r0, =user_input
+	bl atoi
+	mov r5, r0
 	cmp r5, #10
 	// If greater, display text on screen saying it's greater
 	ble _start_else_if
@@ -212,8 +233,6 @@ _start_else:
 	ldr r1, =number_message_l
 	ldr r2, =len_of_l
 end:
-	str r0, [sp, #4]
-
 	mov r0, #1
 	mov r7, #0x4
 	svc #0

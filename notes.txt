@@ -1,6 +1,11 @@
 http://infocenter.arm.com/help/topic/com.arm.doc.dui0204j/Cacigaci.html
 http://www.coranac.com/tonc/text/asm.htm
 
+TODO LIST:
+- atoi (for pro2)
+- convert int to long
+- Do long math
+
 Curly Braces is a list!
 
 PUSH is just a synonym for STMDB using sp as the base register. The DB indicates the 'decrement-before' addressing mode.
