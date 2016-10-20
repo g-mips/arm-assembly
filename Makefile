@@ -1,7 +1,6 @@
-all: pro pro2 pro3 pro4 pro5
+all: test pro pro2 pro3 pro4 pro5
 
 # pro5
-
 pro5: pro5.o
 	gcc -o $@ $+ -g
 
@@ -35,6 +34,13 @@ pro: pro.o
 
 pro.o: proficiencies.s
 	as -o $@ $< -g 
+
+# test
+test: test.o tools.o
+	ld -o $@ $+ -g
+
+test.o: test.s
+	as -o $@ $< -g
 
 # tools ARM and tools THUMB
 tools.o: tools.s

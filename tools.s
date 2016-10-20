@@ -1,5 +1,6 @@
 .text
 
+.global pow
 .global check_pow_2
 .global get_length
 .global add_char

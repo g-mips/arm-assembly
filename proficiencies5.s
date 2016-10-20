@@ -1,13 +1,31 @@
 .data
 
 .balign 4
-message:
-.asciz "%d\n"
+message: .asciz "%d\n"
+
+.balign 4
+format:	.asciz "%d"
+
+.bss
+
+.balign 4
 	
 .text
 
 .global main
-	
+
+.balign 4
+allocation:
+	push {r4,lr}
+
+	ldr r0, =format
+	ldr r0, [r0]
+	bl scanf
+	mov r0, r4
+	bl malloc
+
+	pop {r4,pc}
+
 .balign 4
 print_4_nums:
 	push {r4,fp,lr}

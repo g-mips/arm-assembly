@@ -1,24 +1,22 @@
 .data
 
-.code 16
-
-.balign 2
+.balign 4
 message1:
 .asciz "To stop this loop, please enter q\012"
 
-.balign 2
+.balign 4
 message2:
 .asciz "You entered: "
 
-.balign 2
+.balign 4
 message3:
 .asciz "Your number is under 5\n"
 
-.balign 2
+.balign 4
 message4:
 .asciz "Your number is above or equal to 5\n"
 	
-.balign 2
+.balign 4
 character:
 .skip 2
 	
