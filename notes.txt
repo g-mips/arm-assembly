@@ -94,3 +94,29 @@ A binary floating point number is an approximate representation of a real number
   - Sign: 0 or 1, 1 is negative and 0 is positive
   - Mantissa: Represents a fractional magnitude. Numbers are normalized. Which means that the integer part is adjusted to always be one.
     	      
+Registers across CPU modes
+usr sys svc      abt      und      irq      fiq
+    		    R0
+	    	    R1
+	    	    R2
+	    	    R3
+	    	    R4
+	    	    R5
+	    	    R6
+	    	    R7
+	    	    R8			    R8_fiq
+	    	    R9			    R9_fiq
+	    	    R10			    R10_fiq
+	    	    R11			    R11_fiq
+	    	    R12			    R12_fiq
+  R13   R13_svc  R13_abt  R13_und  R13_irq  R13_fiq
+  R14   R14_svc  R14_abt  R14_und  R14_irq  R14_fiq
+  		    R15
+		    CPSR
+	SPSR_svc SPSR_abt SPSR_und SPSR_irq SPSR_fiq
+
+Number of Registers: r0 - r12 (13) + r8_fiq - r14_fiq (7) + r13* - 14* (10) + r15 (1) + cpsr (1) + spsr* (5) = 37
+
+However, we usually just care about the usr/sys registers: r0 - r15 (16) + CPSR (1) = 17
+
+

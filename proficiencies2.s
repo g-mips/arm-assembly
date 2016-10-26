@@ -3,6 +3,7 @@
 
 // Number to start with
 .balign 4
+debug:	
 time:
 .word 0
 .word 0
@@ -151,6 +152,7 @@ _start:
 	*/
 	sub sp, sp, #8		// sp = sp - 4
 
+	ldr r0, =debug
 	// Prepare my_struc using the stack
 	mov r4, #5		// r0 = 5
 	str r4, [sp]
