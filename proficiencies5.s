@@ -43,7 +43,7 @@ string:	.skip 7
 floating_point_math:
 	push {r4-r5,lr}
 	vpush {s16-s21}
-	mov r5, #11 // stride = 1 len = 3
+	mov r5, #0b10011 // stride = 1 len = 3
 	mov r5, r5, lsl #16
 	vmrs r4, fpscr
 	orr r4, r4, r5
@@ -51,7 +51,7 @@ floating_point_math:
 
 	vmov.f32 s16, s0
 	ldr r4, =float_1
-	vmov s17, #20.0
+	vldr s17, [r4]
 	ldr r4, =float_2
 	vldr s18, [r4]	
 	vmov.f32 s19, s1

@@ -36,11 +36,11 @@ pro.o: proficiencies.s
 	as -o $@ $< -g 
 
 # test
-test: test.o tools.o
-	ld -o $@ $+ -g
+#test: test.o tools.o
+#	ld -o $@ $+ -g
 
-test.o: test.s
-	as -o $@ $< -g
+#test.o: test.s
+#	as -o $@ $< -g
 
 # tools ARM and tools THUMB
 tools.o: tools.s
