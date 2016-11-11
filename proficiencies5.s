@@ -10,7 +10,7 @@ message: .asciz "%d\n"
 format:	.asciz "%d"
 
 .balign 4
-float_message:	 .asciz "%.4f\n"
+float_message:	 .asciz "%.4f\012"
 
 .balign 4
 float_1:	.float 5.89
@@ -51,7 +51,7 @@ floating_point_math:
 
 	vmov.f32 s16, s0
 	ldr r4, =float_1
-	vldr s17, [r4]
+	vmov s17, #20.0
 	ldr r4, =float_2
 	vldr s18, [r4]	
 	vmov.f32 s19, s1
@@ -65,18 +65,22 @@ floating_point_math:
 	ldr r0, =float_message
 	mov r2, #3
 	vcvt.f64.f32 d0, s8
+	fmrrd r2, r3, d0
 	bl printf
 
 	ldr r0, =float_message
 	vcvt.f64.f32 d0, s9
+	fmrrd r2, r3, d0
 	bl printf
 
 	ldr r0, =float_message	
 	vcvt.f64.f32 d0, s10
+	fmrrd r2, r3, d0
 	bl printf
 
 	ldr r0, =float_message	
 	vcvt.f64.f32 d0, s11
+	fmrrd r2, r3, d0
 	bl printf
 
 	// Exit Code

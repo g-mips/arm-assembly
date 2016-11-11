@@ -2,10 +2,10 @@ all: test pro pro2 pro3 pro4 pro5
 
 # pro5
 pro5: pro5.o
-	gcc -o $@ $+ -g -mfpu=vfpv4
+	gcc -o $@ $+ -g
 
 pro5.o: proficiencies5.s
-	as -o $@ $< -g -mfpu=vfpv4
+	as -o $@ $< -g -mfpu=neon-vfpv4
 
 # pro4
 pro4: pro4.o toolsT.o

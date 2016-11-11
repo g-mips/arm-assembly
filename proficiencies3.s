@@ -109,7 +109,7 @@ main:
 	
 //	bl print
 
-	mov r0, #64
+	mov r0, #62
 	bl check_pow_2
 	cmp r0, #0
 	bne main_else_1
