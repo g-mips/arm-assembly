@@ -1,4 +1,18 @@
-all: test pro pro2 pro3 pro4 pro5
+all: test pro pro2 pro3 pro4 pro5 pro6 kernel.img
+
+# kernel.img
+kernel.img: kernel.o
+	ld -o $@ $+
+
+kernel.o: kernel.s
+	as -o $@ $<
+
+# pro6
+pro6: pro6.o tools.o
+	ld -o $@ $+ -g
+
+pro6.o: proficiencies6.s
+	as -o $@ $< -g
 
 # pro5
 pro5: pro5.o

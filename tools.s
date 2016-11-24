@@ -6,8 +6,9 @@
 .global add_char
 .global utoa
 .global atoi
+.global get_input
 .global print
-
+.global copy_string
 
 //---------------------- POW ----------------------//
 // r0 - Base Number
@@ -308,3 +309,29 @@ print:
 	svc #0
 	
 	pop {r4,r7,pc}
+
+//------------------ COPY_STRING -------------------//
+// r0 - String to copy
+// r1 - Where to copy
+// r2 - Length of string	
+// 
+//-------------------------------------------------//	
+.balign 4
+copy_string:
+	push {r4-r5,lr}
+
+	mov r5, #0
+	b .Lcopy_string_loop_1_check
+.Lcopy_string_loop_1:
+	strb r4, [r1]
+	add r1, r1, #1
+	add r0, r0, #1
+	add r5, r5, #1
+.Lcopy_string_loop_1_check:
+	cmp r2, r5
+	beq .Lcopy_string_loop_1_end
+	ldrb r4, [r0]
+	cmp r4, #0
+	bne .Lcopy_string_loop_1
+.Lcopy_string_loop_1_end:
+	pop {r4-r5,pc}
