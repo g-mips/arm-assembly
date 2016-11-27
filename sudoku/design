@@ -1,0 +1,84 @@
+
+VARIABLES
+
+cells - ARRAY OF A STRUCT
+struct cell* cells = malloc(81)
+
+sizeOfBoard - INT (i.e. 2 = 2x2, 3 = 3x3)
+
+struct cell {
+       int possibleValues[9]
+       char value
+       char default == 1 : true, 0 : false
+};
+
+***************************************
+
+FUNCTIONS
+
+printBoard
+	- Prints out the current state of the board
+loadBoard
+	- Loads a board from a file
+saveBoard
+	- Saves the current board to a file
+getUserInput
+	- Gets the user input and checks the validity of it
+checkValidityOfNumber
+	- MOD BY 9 gives column number
+	- DIVIDE BY 3 gives row number
+	- Use these two tools to checkRow, checkColumn, and checkBox
+checkRow
+	- Checks if given value is in current row
+checkColumn
+	- Checks if given value is in current column
+checkBox
+	- Checks if given value is in current box
+computePossibleValues
+	- Checks the possible values of all cells
+eraseCell
+	- Erases the value of a given cell.
+eraseBoard
+	- Erases all of the cell's values except the default cells
+fillCell
+	- Fills a cell with a given value
+checkBounds
+	- Check the bounds of given coordinates of a cell
+
+***************************************
+
+0. Start
+  |
+  |
+  V
+1. Get Dimensions of board
+  |
+  |
+  V
+2. Get board from file
+  |
+  |
+  V
+3. Compute possibleValues of each cell
+  |
+  |
+  V
+4. Display Board and Options For User
+  |
+  |
+  V
+5. Validate User Input (make sure it is a valid option and make sure that the cell information is valid [i.e. cell location is not out of bounds and cell is not empty and value is valid])
+  |
+  |
+  V
+6. Go to (4) if invalid and display error message otherwise continue on.
+  |
+  |
+  V
+7. Compute option and go to (4). Unless option was (q)uit --> If option is to save board. Save to a file of a name that the user specifies. Then continue. --> If option is to erase value from a cell and is not a default cell,
+   erase cell value and recompute possibleValues. --> If option was to put a value into a cell and the cell is non-empty, not a default cell, and is in bounds, then fill in the cell with the value and recompute possibleValues.
+   --> POSSIBLE OPTION: Restart. This will erase board and start from scratch.
+  |
+  |
+  V
+8. Quit

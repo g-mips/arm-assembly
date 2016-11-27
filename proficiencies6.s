@@ -19,6 +19,7 @@
 .set S_IWGRP, 00020
 
 .set BRK, 45
+
 .data
 
 debug:
@@ -48,7 +49,7 @@ number_to_store:
 .global _start
 
 /*
-	This class looks like this:
+	This "class" looks like this:
 	char name[20]
 	greet
 	getName
@@ -359,22 +360,75 @@ main:
 	ldr r4, [r4]
 	add r0, sp, #24
 	blx r4
-	
+
 	add sp, sp, #48
 	pop {r4-r7,pc}
 .Lmain_0:
 .asciz "Grant"
+
+.balign 4
+alloc_test:
+	push {r4,lr}
+	sub sp, sp, #8
+	
+	mov r0, #3
+	bl malloc
+
+	str r0, [sp]
+	
+	mov r4, #1
+	str r4, [r0]
+	mov r4, #2
+	str r4, [r0, #1]
+	mov r4, #3
+	str r4, [r0, #2]
+
+	mov r0, #5
+	bl malloc
+
+	str r0, [sp, #4]
+	
+	ldr r0, [sp]
+	bl free
+
+	mov r0, #2
+	bl malloc
+
+	str r0, [sp, #8]
+
+	ldr r0, [sp, #4]
+	bl free
+
+	ldr r0, [sp, #8]
+	bl free
+	
+	add sp, sp, #8
+	pop {r4,pc}
+	
+
+.balign 4
+check_optimized:
+	push {r4,lr}
+
+	mov r4, #1
+	mov r4, r4, lsl #31
+	mov r0, r4
+	bl check_pow_2_op
+	
+	pop {r4,pc}
 	
 .balign 4
 _start:
-	ldr r0, =debug
+	ldr r4, =debug
 
-	bl main
+	bl check_optimized
+//	bl main
 	
 //	bl file_io
 
 //	bl choose_number
 
+//	bl alloc_test
 	
 	mov r7, #1
 	svc #0
