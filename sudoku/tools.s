@@ -29,11 +29,21 @@ malloc_base:
 	
 .text
 
+.global write
+.global to_lower
+.global to_upper
+.global remove_char
+.global clear_bytes
+.global open
+.global close
+.global read
+.global mod
 .global pow
 .global check_pow_2
 .global check_pow_2_op
 .global get_length
 .global add_char
+.global clear_buffer
 .global utoa
 .global atoi
 .global get_input
@@ -41,6 +51,44 @@ malloc_base:
 .global copy_string
 .global malloc
 .global free
+
+.balign 4
+to_lower:
+	push {lr}
+
+	cmp r0, #65
+	blt to_lower_end
+
+	cmp r0, #90
+	bgt to_lower_end
+
+	add r0, r0, #32
+to_lower_end:	
+	pop {pc}
+
+.balign 4
+to_upper:
+	push {lr}
+
+	cmp r0, #97
+	blt to_upper_end
+
+	cmp r0, #122
+	bgt to_upper_end
+
+	sub r0, r0, #32
+to_upper_end:
+	pop {pc}
+	
+.balign 4
+mod:
+	push {r4-r6,lr}
+
+	udiv r4, r0, r1
+	mul r5, r4, r1
+	sub r0, r0, r5
+	
+	pop {r4-r6,pc}
 	
 //----------------- FIND_FREE_BLOCK ----------------//
 // r0 - Used to point to the last block of the linked list
@@ -360,6 +408,80 @@ add_char_loop_1_cond:
 	
 	pop {r4-r5,pc}
 
+//------------------ REMOVE_CHAR -------------------//
+// r0 - Buffer Pointer (32 bits)
+// r1 - Position to remove
+// r2 - Length of Buffer	
+//-------------------------------------------------//	
+.balign 4
+remove_char:
+	push {r4-r8,lr}
+
+	mov r5, r2
+
+	// r7 Contains the previous character
+	mov r7, #0
+	
+	b remove_char_loop_1_cond
+remove_char_loop_1:
+	ldrb r4, [r0, r5]
+	str r7, [r0, r5]
+
+	mov r7, r4
+remove_char_loop_1_cond:
+	sub r5, r5, #1
+
+	ldrb r4, [r0, r5]
+	cmp r4, #0
+	beq remove_char_end
+
+	cmp r5, r1
+	bge remove_char_loop_1
+
+remove_char_end:
+	pop {r4-r8,pc}
+	
+//------------------ CLEAR_BYTES -------------------//
+// r0 - Buffer Pointer (32 bits)
+// r1 - Length of Buffer	
+//-------------------------------------------------//	
+.balign 4
+clear_bytes:
+	push {r4-r6,lr}
+
+	mov r4, #0
+	mov r6, #0
+	
+clear_bytes_loop_1:	
+	strb r4, [r0]
+	add r0, r0, #1
+clear_bytes_loop_1_cond:
+	add r6, r6, #1
+	cmp r6, r1
+	blt clear_bytes_loop_1
+	
+	pop {r4-r6,pc}
+	
+//------------------ CLEAR_BUFFER ------------------//
+// r0 - Buffer Pointer (32 bits)
+//-------------------------------------------------//	
+.balign 4
+clear_buffer:
+	push {r4-r6,lr}
+
+	mov r4, #0
+
+	b clear_buffer_loop_1_cond
+clear_buffer_loop_1:	
+	strb r4, [r0]
+	add r0, r0, #1
+clear_buffer_loop_1_cond:
+	ldrb r5, [r0]
+	cmp r5, #0
+	bne clear_buffer_loop_1
+
+	pop {r4-r6,pc}
+	
 //---------------------- ATOI ---------------------//
 // r0 - Buffer Pointer to be converted (32 bits)
 // Converts a string into a number
@@ -563,3 +685,58 @@ copy_string:
 	bne .Lcopy_string_loop_1
 .Lcopy_string_loop_1_end:
 	pop {r4-r5,pc}
+
+
+//--------------------- OPEN -----------------------//
+// r0 - fileName
+// r1 - flags
+// r2 - mode
+//-------------------------------------------------//	
+.balign 4
+open:
+	push {r7,lr}
+
+	mov r7, #OPEN
+	svc #0
+
+	pop {r7,pc}
+
+//--------------------- CLOSE ----------------------//
+// r0 - file descriptor
+//-------------------------------------------------//	
+.balign 4
+close:
+	push {r7,lr}
+
+	mov r7, #CLOSE
+	svc #0
+
+	pop {r7,pc}
+
+//--------------------- READ ----------------------//
+// r0 - file descriptor
+// r1 - Buffer to store results into	
+// r2 - Number of bytes to read	
+//-------------------------------------------------//	
+.balign 4
+read:
+	push {r7,lr}
+
+	mov r7, #READ
+	svc #0
+	
+	pop {r7,pc}
+
+//--------------------- WRITE ----------------------//
+// r0 - file descriptor
+// r1 - Buffer to store results into	
+// r2 - Number of bytes to write	
+//-------------------------------------------------//	
+.balign 4
+write:
+	push {r7,lr}
+
+	mov r7, #WRITE
+	svc #0
+
+	pop {r7,pc}
